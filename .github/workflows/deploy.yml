@@ -5,16 +5,21 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "application/**"
+      - ".github/workflows/deploy.yml"
   pull_request:
     branches:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  terraform:
+  validate:
     name: Validate Terraform
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: terraform
@@ -34,3 +39,20 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+  deploy:
+    name: Deploy Cloudflare Worker
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Worker with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy application/worker.js --name student-task-manager --compatibility-date 2026-10-13
