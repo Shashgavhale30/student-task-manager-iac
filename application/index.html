@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <div>
+        <p class="eyebrow">STUDENT PRODUCTIVITY</p>
+        <h1>My Tasks <span>✦</span></h1>
+        <p class="subtitle">Plan your work. Make progress every day.</p>
+      </div>
+      <div class="date" id="today"></div>
+    </header>
+
+    <section class="stats">
+      <article class="stat-card">
+        <span>Total tasks</span>
+        <strong id="totalCount">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Completed</span>
+        <strong id="completedCount">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Remaining</span>
+        <strong id="remainingCount">0</strong>
+      </article>
+    </section>
+
+    <section class="task-panel">
+      <h2>Add a new task</h2>
+      <form id="taskForm">
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="e.g. Complete Terraform assignment"
+          maxlength="200"
+          required
+        />
+        <button type="submit">+ Add task</button>
+      </form>
+
+      <div class="toolbar">
+        <h2>Your task list</h2>
+        <select id="filterTasks" aria-label="Filter tasks">
+          <option value="all">All tasks</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+
+      <p id="statusMessage" role="status"></p>
+      <div id="taskList" class="task-list"></div>
+    </section>
+
+    <footer>
+      <span>Student Task Manager</span>
+      <span>Powered by Cloudflare Workers + KV + Terraform</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
