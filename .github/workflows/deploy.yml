@@ -55,4 +55,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy application/worker.js --name student-task-manager --compatibility-date 2026-10-13
+          command: deploy --config wrangler.toml

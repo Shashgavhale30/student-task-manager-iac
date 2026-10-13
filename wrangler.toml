@@ -1,0 +1,7 @@
+name = "student-task-manager"
+main = "application/worker.js"
+compatibility_date = "2026-10-13"
+
+[[kv_namespaces]]
+binding = "TASKS_KV"
+id = "dcf522af65d240a2b65a94cb59bb949d"
