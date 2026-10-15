@@ -21,40 +21,51 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Student Task Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
 <style>
-:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#20253a;background:#f5f6fb}
+:root{--ink:#2b2620;--muted:#8a8172;--accent:#e2582f;--accent-dark:#c74722;--accent-soft:#fdeae2;--paper:#faf6ef;--card:#fffdf9;--line:#e9e1d2;--green:#2f7d4f;--green-soft:#e8f3ec}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh}
-.container{width:min(100% - 32px,960px);margin:auto;padding:44px 0 24px}
-header{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:28px}
-.eyebrow{color:#6558e8;font-size:12px;font-weight:800;letter-spacing:2px}
-h1{font-size:clamp(32px,5vw,46px);margin:8px 0;letter-spacing:-1.5px}
-h1 span{color:#7568ed}
-.subtitle,.date,.stat-card span{color:#777e91}
-.subtitle{margin:0}
-.date{text-align:right;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.stat-card,.panel{background:white;border:1px solid #e9eaf2;border-radius:16px;padding:22px}
-.stat-card span{font-size:13px}
-.stat-card strong{display:block;margin-top:10px;font-size:30px}
-h2{font-size:18px;margin:0}
-form{display:flex;gap:12px;margin:18px 0 30px}
-input,select,button{font:inherit;border-radius:10px}
-input[type=text]{flex:1;min-width:0;border:1px solid #dfe1ec;padding:14px}
-button{border:0;background:#6558e8;color:white;font-weight:700;padding:13px 18px;cursor:pointer}
-button:hover{background:#5145d0}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
-select{background:white;border:1px solid #dfe1ec;padding:10px}
-#status{font-size:13px;color:#777e91;min-height:18px}
-.task-list{display:grid;gap:12px}
-.task{display:flex;align-items:center;gap:12px;border:1px solid #ececf4;border-radius:12px;padding:14px}
-.task input{width:18px;height:18px;accent-color:#6558e8}
-.task-title{flex:1;overflow-wrap:anywhere}
-.task.completed .task-title{color:#999;text-decoration:line-through}
-.delete{background:#fff0f0;color:#bd3636;padding:8px 12px}
-.empty{text-align:center;padding:28px 12px;color:#777e91}
-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#8a8fa0;font-size:12px;margin-top:22px}
-@media(max-width:600px){.container{padding-top:28px}header{align-items:flex-start;flex-direction:column}.date{text-align:left}.stats{gap:8px}.stat-card{padding:14px}.stat-card strong{font-size:24px}form{flex-direction:column}.panel{padding:16px}}
+body{margin:0;min-height:100vh;font-family:"Nunito Sans","Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(ellipse 60% 40% at 85% -10%,#fdeee2 0%,transparent 70%),radial-gradient(ellipse 50% 35% at 0% 0%,#fdf3e0 0%,transparent 70%),var(--paper)}
+h1,h2,button,.eyebrow,.stat-card strong{font-family:"Sora","Segoe UI",sans-serif}
+.container{width:min(100% - 32px,720px);margin:auto;padding:56px 0 32px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:28px}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin:0}
+h1{font-size:clamp(34px,6vw,52px);margin:8px 0 4px;letter-spacing:-1.5px;line-height:1.05}
+h1 span{color:var(--accent)}
+.subtitle{color:var(--muted);margin:0;font-size:15px}
+.date{text-align:right;font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 2px 8px rgba(120,96,60,.06)}
+.stat-card span{font-size:12.5px;font-weight:600;color:var(--muted)}
+.stat-card strong{display:block;margin-top:6px;font-size:26px;letter-spacing:-.5px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 4px 20px rgba(120,96,60,.07)}
+h2{font-size:16px;margin:0;letter-spacing:-.3px}
+form{display:flex;gap:10px;margin:16px 0 28px}
+input,select,button{font:inherit;border-radius:12px}
+input[type=text]{flex:1;min-width:0;border:1.5px solid var(--line);background:#fff;padding:13px 16px;outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+input::placeholder{color:#b8ae9c}
+input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+button{border:0;background:var(--accent);color:#fff;font-weight:700;font-size:14.5px;padding:13px 20px;cursor:pointer;transition:background .15s ease,transform .1s ease}
+button:hover{background:var(--accent-dark)}
+button:active{transform:scale(.98)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px dashed var(--line);padding-top:20px}
+select{background:#fff;border:1.5px solid var(--line);padding:9px 12px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;outline:none}
+select:focus{border-color:var(--accent)}
+#status{font-size:13px;color:var(--muted);font-weight:600;min-height:18px;margin:12px 0 4px}
+.task-list{display:grid;gap:10px}
+.task{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;transition:border-color .15s ease}
+.task:hover{border-color:#ddd1b8}
+.task input[type=checkbox]{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+.task.completed{background:var(--green-soft);border-color:#cfe4d6}
+.task-title{flex:1;overflow-wrap:anywhere;font-weight:600}
+.task.completed .task-title{color:var(--muted);text-decoration:line-through;font-weight:400}
+.delete{background:transparent;color:#b3513b;font-size:13px;padding:7px 12px}
+.delete:hover{background:var(--accent-soft)}
+.empty{text-align:center;padding:32px 12px;color:var(--muted);font-weight:600}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:12px;font-weight:600;margin-top:26px}
+@media(max-width:600px){.container{padding-top:32px}header{align-items:flex-start;flex-direction:column}.date{text-align:left}.stats{gap:8px}.stat-card{padding:12px 14px}.stat-card strong{font-size:22px}form{flex-direction:column}form button{width:100%}.panel{padding:18px}}
 </style>
 </head>
 <body>
