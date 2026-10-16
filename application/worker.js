@@ -242,6 +242,7 @@ export default {
         const task = {
           id: crypto.randomUUID(),
           title,
+          deadline: typeof body.deadline === "string" && body.deadline ? body.deadline : null,
           completed: false,
           createdAt: new Date().toISOString()
         };
@@ -276,6 +277,10 @@ export default {
 
           if (typeof body.completed === "boolean") {
             tasks[index].completed = body.completed;
+          }
+
+          if (typeof body.deadline === "string") {
+            tasks[index].deadline = body.deadline || null;
           }
 
           await env.TASKS_KV.put("tasks", JSON.stringify(tasks));
